@@ -26,4 +26,36 @@ a
     margin: 20px auto;
     border: 1px solid #960000;
     border-radius: 5px;
+
+    padding: 10px;
+}
+
+input[type=text], input[type=number]
+{
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #960000;
+}
+
+input[type=button]
+{
+  background-color: #960000;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type=button]
+{
+  background-color: #960000;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5px;;
+  width: 100px;
 }

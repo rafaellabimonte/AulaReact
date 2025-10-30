@@ -66,3 +66,60 @@ app.get("/alunos/:codigo", (req, res) => {
          return res.status(200).json(resultados[0]);
     });
 });
+app.post("/alunos", (req, res) => {
+   const {nome, ciadade, estado} = req.body;
+
+   const sql = "insert into alunos(nome, cidade, estado) values (?,?,?)";
+
+   banco.query(sql, [nome, ciadade, estado], (erro, result) => {
+    if (erro) {
+         console.log(erro);
+         return res.status(500).json({error: "Erro ao cadastrar aluno"});
+    } else {
+         let mensagem = `Aluno ${nome} cadastrado com sucesso com o codigo ${res} `;
+         console.log(mensagem) ;
+         return res.status(201).json({message: mensagem});
+        }
+
+   });
+});
+
+app.post("/alunos/:id", (req, res) => {
+    const { id } = req.params;
+    const { nome, cidade, estado } = req.body;
+
+    const sql = "UPDATE alunos SET nome =?, cidade =?, estado =?, WHERE codigo =?";
+
+    banco.query(sql, [nome, cidade, estado, id], (erro, result) => {
+        if (erro) {
+         console.log(erro);
+         return res.status(500).json({error: "Erro ao atualizar aluno"});
+    } 
+
+    if (result.affectedRows === 0) {
+        return res.status(404).json({error: "Aluno não encontrado"});
+    }
+
+    return res.status(200).json({ message: `Aluno com ID ${id} atualizado com sucesso` });
+    });
+
+});
+
+app.post("/alunos/:id", (req, res) => {
+    const { id } = req.params;
+
+    const sql = "DELETE FROM alunos WHERE codigo = ?";
+
+    banco.query(sql, [id], (erro, result) => {
+      if (erro) {
+         console.log(erro);
+         return res.status(500).json({error: "Erro ao excluir aluno"});
+    } 
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({error: "Aluno não encontrado"});
+    }
+
+    return res.status(200).json({ message: `Aluno com ID ${id} excluído com sucesso` });
+    });
+});

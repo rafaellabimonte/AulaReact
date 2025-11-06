@@ -49,7 +49,7 @@ app.get("/alunos", (req, res) => {
 });
 
 app.get("/alunos/:codigo", (req, res) => {
-   const {codigo} = "SELECT * FROM alunos";
+   const {codigo} = req.params;
    
    const sql = "SELECT * FROM alunos WHERE codigo = ?";
 
@@ -67,11 +67,11 @@ app.get("/alunos/:codigo", (req, res) => {
     });
 });
 app.post("/alunos", (req, res) => {
-   const {nome, ciadade, estado} = req.body;
+   const {nome, cidade, estado} = req.body;
 
    const sql = "insert into alunos(nome, cidade, estado) values (?,?,?)";
 
-   banco.query(sql, [nome, ciadade, estado], (erro, result) => {
+   banco.query(sql, [nome, cidade, estado], (erro, result) => {
     if (erro) {
          console.log(erro);
          return res.status(500).json({error: "Erro ao cadastrar aluno"});
@@ -88,7 +88,7 @@ app.post("/alunos/:id", (req, res) => {
     const { id } = req.params;
     const { nome, cidade, estado } = req.body;
 
-    const sql = "UPDATE alunos SET nome =?, cidade =?, estado =?, WHERE codigo =?";
+    const sql = "UPDATE alunos SET nome =?, cidade =?, estado =? WHERE codigo =?";
 
     banco.query(sql, [nome, cidade, estado, id], (erro, result) => {
         if (erro) {
